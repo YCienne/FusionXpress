@@ -1,5 +1,3 @@
-// src/pages/userend/ProductList.js
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
