@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';  // Import react-toastify for success messages
 
-const EditProductForm = ({ product, onUpdate, onCancel }) => {
+const PostAdForm = () => {
   const [formData, setFormData] = useState({
-    title: product.title,
-    description: product.description,
-    price: product.price,
-    category: product.category,
-    image: null, // Initially, image is null
+    title: '',
+    description: '',
+    price: '',
+    category: '',
+    image: null,  // Add image to the state
   });
 
   // Handle input changes for text fields
@@ -28,19 +27,16 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
     });
   };
 
-  // Handle form submission for editing the product
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Trigger the onUpdate function passed down as a prop
-    onUpdate(formData);
-
-    // Display a success toast message after editing
-    toast.success('Product updated successfully!');
+    // Add formData to handle image upload as well
+    console.log('Product added:', formData);
+    // Here you can add the logic to send the form data including the image to the backend
   };
 
   return (
-    <div className="bg-white p-6 shadow-md rounded-lg">
-      <h2 className="text-lg font-semibold mb-4">Edit Product</h2>
+    <form className="bg-white p-6 shadow-md rounded-lg" onSubmit={handleSubmit}>
+      <h2 className="text-lg font-semibold mb-4 text-green-900">Add New Ad</h2>
 
       {/* Title Input */}
       <div className="mb-4">
@@ -89,49 +85,27 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
         />
       </div>
 
-      {/* Current Image Display */}
+      {/* Image Upload Input */}
       <div className="mb-4">
-        <label className="block text-gray-700">Current Image</label>
-        {product.image && (
-          <img
-            src={product.image}
-            alt="Product"
-            className="w-32 h-32 object-cover rounded-lg"
-          />
-        )}
-      </div>
-
-      {/* Image Upload Input for Editing */}
-      <div className="mb-4">
-        <label className="block text-gray-700">Update Product Image</label>
+        <label className="block text-gray-700">Product Image</label>
         <input
           type="file"
           name="image"
           accept="image/*"
-          onChange={handleImageChange}
+          onChange={handleImageChange} // Use this handler to capture the file
           className="w-full px-3 py-2 border rounded-lg"
         />
       </div>
 
-      {/* Submit and Cancel Buttons */}
-      <div className="flex justify-end space-x-4">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-        >
-          Save Changes
-        </button>
-      </div>
-    </div>
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="bg-gradient-to-r from-teal-400 to-blue-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+      >
+        Post Ad
+      </button>
+    </form>
   );
 };
 
-export default EditProductForm;
+export default PostAdForm;

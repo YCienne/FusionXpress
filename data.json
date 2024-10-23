@@ -1,0 +1,66 @@
+ [
+    {
+      "id": 1,
+      "name": "Smartphone",
+      "price": 699,
+      "image": "https://via.placeholder.com/300?text=Smartphone",
+      "category": "electronics",
+      "description": "Latest model smartphone with advanced features."
+    },
+    {
+      "id": 2,
+      "name": "Laptop",
+      "price": 1200,
+      "image": "https://via.placeholder.com/300?text=Laptop",
+      "category": "electronics",
+      "description": "High-performance laptop suitable for work and play."
+    },
+    {
+      "id": 3,
+      "name": "Headphones",
+      "price": 150,
+      "image": "https://via.placeholder.com/300?text=Headphones",
+      "category": "electronics",
+      "description": "Noise-cancelling headphones for immersive sound experience."
+    },
+    {
+     "id": 4,
+      "name": "Wrist Watch",
+      "price": 250,
+      "image": "https://via.placeholder.com/300?text=Wrist+Watch",
+      "category": "fashion",
+      "description": "Stylish wrist watch for all occasions."
+    },
+    {
+     "id": 5,
+      "name": "Blender",
+      "price": 80,
+      "image": "https://via.placeholder.com/300?text=Blender",
+      "category": "kitchen",
+      "description": "Powerful blender for smoothies and sauces."
+    },
+    {
+      "id": 6,
+      "name": "Toy Car",
+      "price": 40,
+      "image": "https://via.placeholder.com/300?text=Toy+Car",
+      "category": "toys",
+      "description": "Remote-controlled toy car for kids."
+    },
+    {
+     "id": 7,
+      "name": "Skincare Set",
+      "price": 60,
+      "image": "https://via.placeholder.com/300?text=Skincare+Set",
+      "category": "beauty",
+      "description": "Complete skincare set for glowing skin."
+    },
+    {
+      "id": 8,
+      "name": "Cookbook",
+      "price": 25,
+      "image": "https://via.placeholder.com/300?text=Cookbook",
+      "category": "books",
+      "description": "A collection of healthy and delicious recipes."
+    }
+  ]
