@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import kitchen1 from '../assets/images/kitchen1.jpg';
 import cosmetic1 from '../assets/images/cosmetic1.jpg';
 import fashion from '../assets/images/fashion.jpg';
 import black3 from '../assets/images/black3.jpg';
 import cosmetic2 from '../assets/images/cosmetic2.jpg';
-import cosmetic3 from '../assets/images/cosmetic3.jpg';
+import cosmetic4 from '../assets/images/cosmetic4.jpg';
 import cart from '../assets/images/cart.jpg';
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentSpecialSlide, setCurrentSpecialSlide] = useState(0);
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   const slides = [
-    { image: kitchen1, title: "Cozy Home Deals", description: "Revamp Your Kitchen Today With Incredible Deals From fusionXpress!" },
-    { image: cosmetic1, title: "Treat Your Skin Beautifully", description: "Stunning Product To Help You Feel Your Best" },
+    { image: kitchen1, title: "Cozy Home Deals", description: "Revamp Your Kitchen Today With Incredible Deals From FusionXpress!" },
+    { image: cosmetic1, title: "Treat Your Skin Beautifully", description: "Stunning Products To Help You Feel Your Best" },
     { image: fashion, title: "Express Your Style", description: "Dress to impress and make the best of everyday" },
     { image: black3, title: "Super Sales", description: "Special Offers You Can't Resist" },
     { image: cosmetic2, title: "Beauty Deals For Everyone", description: "Take Care Of Your Skin To Make Sure You Are Always Going" }
@@ -29,7 +31,7 @@ const Home = () => {
 
   const specialSlides = [
     { image: cart, text: "Looking for anything special? We got you." },
-    { image: cosmetic3, text: "Discover exclusive offers just for you." },
+    { image: cosmetic4, text: "Discover exclusive offers just for you." },
     { image: "https://picsum.photos/id/1070/1200/500", text: "Limited time deals you won't want to miss!" },
     { image: "https://picsum.photos/id/1080/1200/500", text: "Exclusive discounts available now." },
     { image: "https://picsum.photos/id/1090/1200/500", text: "Check out our best-selling products!" }
@@ -49,10 +51,14 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const handleCategoryClick = () => {
+    navigate(`/home/category-list`); // Navigate to the Category List page
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 px-[40px]">
       {/* Banner Carousel */}
-      <div className="relative  h-[500px] rounded-l-3xl rounded-r-3xl overflow-hidden">
+      <div className="relative h-[500px] rounded-l-3xl rounded-r-3xl overflow-hidden">
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -87,26 +93,25 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Best Sellers Section */}
+      {/* Featured Category */}
       <div className="container mx-auto px-4 md:px-6 py-16 text-center">
         <h2 className="text-3xl font-bold mb-4">Featured Categories</h2>
-      
 
-      {/* Circular Images Section */}
-      <div className="container mx-auto px-4 md:px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          {circularImages.map((item, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 shadow-lg">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                />
+        {/* Circular Images Section */}
+        <div className="container mx-auto px-4 md:px-6 py-16">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+            {circularImages.map((item, index) => (
+              <div key={index} className="flex flex-col items-center cursor-pointer" onClick={() => handleCategoryClick()}>
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 shadow-lg">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <h3 className="text-lg md:text-xl font-semibold text-gray-800">{item.title}</h3>
               </div>
-              <h3 className="text-lg md:text-xl font-semibold text-gray-800">{item.title}</h3>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
       </div>
