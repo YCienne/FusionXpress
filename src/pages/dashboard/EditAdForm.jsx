@@ -1,66 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';  // Import react-toastify for success messages
-// import { apiUpdateAdvert } from '../../services/vendor'; // Go up two levels to reach the services folder
+import { toast } from 'react-toastify';
+import { apiUpdateAdvert } from '../../services/vendor';
+import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate for navigation
+import { apiGetAdvertDetails } from '../../services/user';
 
-const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
+const EditAdForm = ({ advertId, onUpdate }) => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     price: '',
     category: '',
-    image: null, // Initially, image is null
+    image: null,
   });
 
-  // Dummy data for testing
-  const dummyAdvert = {
-    title: 'Sample Advert',
-    description: 'This is a sample advert description.',
-    price: '99.99',
-    category: 'Electronics',
-    image: 'path_to_sample_image.jpg', // Replace with actual image path or URL
-  };
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
-    // Fetch advert details based on advertId (use dummy data for now)
     const fetchAdvert = async () => {
       try {
-        // const response = await apiGetAdvert(advertId); // Uncomment when ready
-        // const advert = response.data; // Assuming the advert data is returned in the response
-        // setFormData(advert); // Set the form data with the fetched advert
-
-        // For now, using dummy data
-        setFormData(dummyAdvert); 
+        const res = await apiGetAdvertDetails(id);
+        console.log('AdvertDetails', res.data);
+        setFormData(res.data.data);
       } catch (error) {
         console.error('Error fetching advert:', error);
       }
     };
 
     fetchAdvert();
-  }, [advertId]);
+  }, [advertId, id]);
 
-  // Handle input changes for text fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Handle image input
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Select the first file from the input
-    setFormData({
-      ...formData,
-      image: file,
-    });
+    const file = e.target.files[0];
+    setFormData({ ...formData, image: file });
   };
 
-  // Handle form submission for editing the advert
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Create a FormData object to handle image uploads
       const updatedData = new FormData();
       updatedData.append('title', formData.title);
       updatedData.append('description', formData.description);
@@ -70,28 +52,25 @@ const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
         updatedData.append('image', formData.image);
       }
 
-      // Call the apiUpdateAdvert function to update the advertisement
-      // const response = await apiUpdateAdvert(advertId, updatedData); // Uncomment when ready
-      // if (response.status === 200) {
-      //   onUpdate(response.data); // Trigger the onUpdate function with updated advert data
-      //   toast.success('Advert updated successfully!');
-      // }
+      // Call the API to update the advert
+      await apiUpdateAdvert(id, updatedData);
 
-      // For now, simulate a successful update
-      onUpdate({ ...formData, id: advertId }); // Dummy update
-      toast.success('Advert updated successfully!'); // Dummy success message
-
+      toast.success('Advert updated successfully!');
+      navigate('/dashboard/view-ads'); // Navigate back to view ads page
     } catch (error) {
       console.error('Error updating advert:', error);
-      toast.error('Failed to update advert.'); // Error handling
+      toast.error('Failed to update advert.');
     }
+  };
+
+  const handleCancel = () => {
+    navigate('/dashboard/view-ads'); // Redirect to the view ads page on cancel
   };
 
   return (
     <div className="bg-white p-6 shadow-md rounded-lg">
       <h2 className="text-lg font-semibold mb-4">Edit Advert</h2>
 
-      {/* Title Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Title</label>
         <input
@@ -103,7 +82,6 @@ const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
         />
       </div>
 
-      {/* Description Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Description</label>
         <textarea
@@ -114,7 +92,6 @@ const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
         />
       </div>
 
-      {/* Price Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Price</label>
         <input
@@ -126,7 +103,6 @@ const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
         />
       </div>
 
-      {/* Category Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Category</label>
         <input
@@ -138,19 +114,17 @@ const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
         />
       </div>
 
-      {/* Current Image Display */}
       <div className="mb-4">
         <label className="block text-gray-700">Current Image</label>
-        {dummyAdvert.image && (
+        {formData.image && (
           <img
-            src={dummyAdvert.image}
+            src={formData.image}
             alt="Advert"
             className="w-32 h-32 object-cover rounded-lg"
           />
         )}
       </div>
 
-      {/* Image Upload Input for Editing */}
       <div className="mb-4">
         <label className="block text-gray-700">Update Advert Image</label>
         <input
@@ -162,11 +136,10 @@ const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
         />
       </div>
 
-      {/* Submit and Cancel Buttons */}
       <div className="flex justify-end space-x-4">
         <button
           type="button"
-          onClick={onCancel}
+          onClick={handleCancel}
           className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
         >
           Cancel

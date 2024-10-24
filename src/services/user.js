@@ -2,7 +2,7 @@ import { apiClient } from "./config";
 
 // Get All Adverts
 export const apiGetAllAdverts = async () => {
-  return apiClient.get("/adverts");
+  return apiClient.get("/adverts?limit=0");
 };
 
 // Get Advert Details

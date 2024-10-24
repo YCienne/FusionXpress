@@ -10,7 +10,7 @@ const DeleteProductModal = ({ isOpen, onRequestClose, onDeleteProduct }) => {
       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
     >
       <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
-      <p className="mb-6">Are you sure you want to delete this product?</p>
+      <p className="mb-6">Are you sure you want to delete this advert?</p>
       <div className="flex justify-end space-x-4">
         <button
           onClick={onRequestClose}
@@ -30,4 +30,3 @@ const DeleteProductModal = ({ isOpen, onRequestClose, onDeleteProduct }) => {
 };
 
 export default DeleteProductModal;
-

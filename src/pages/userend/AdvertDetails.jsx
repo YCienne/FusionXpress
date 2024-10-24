@@ -3,10 +3,11 @@ import { useParams, Link } from "react-router-dom";
 import dummyAdvert from "../../../data.json";
 import loadingGif from '../../assets/loading.gif'; // Ensure the path is correct
 import { AiOutlineClose } from 'react-icons/ai'; // Import the close icon from React Icons
+import { apiGetAdvertDetails } from "../../services/user";
 
 const AdvertDetails = () => {
   const { id } = useParams();
-  const [advert, setAdvert] = useState(null);
+  const [advert, setAdvert] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,6 +24,20 @@ const AdvertDetails = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [sliderText.length]);
+
+  const fetchAdvertDetails = async () => {
+    try {
+      const res = await apiGetAdvertDetails(id);
+      console.log("AdvertDetails", res.data);
+      setAdvert(res.data.data)
+    } catch (error) {
+      console.log("Error fetching advert", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAdvertDetails();
+  }, []);
 
   useEffect(() => {
     const data = dummyAdvert.find(ad => ad.id == id);
@@ -53,8 +68,8 @@ const AdvertDetails = () => {
         {/* Image on the left */}
         <div className="md:w-1/2">
           <img
-            src={advert?.image || "https://via.placeholder.com/300"}
-            alt={advert?.name || "Advert"}
+            src={`https://savefiles.org/${advert?.image}?shareable_link=461`}
+            alt={advert?.title || "Advert"}
             className="w-full h-96 object-cover" // Increased height for a larger display
           />
         </div>
@@ -62,7 +77,7 @@ const AdvertDetails = () => {
         {/* Details on the right */}
         <div className="p-6 md:w-1/2">
           <h1 className="text-3xl md:text-4xl font-semibold text-gray-900">
-            {advert?.name || "Advert Name"}
+            {advert?.title|| "Advert Name"}
           </h1>
           <p className="text-2xl font-bold text-green-600 mt-2">
             ${advert?.price || "0.00"}
