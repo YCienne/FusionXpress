@@ -55,41 +55,28 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
             className="absolute mt-2 bg-white text-black rounded-md shadow-lg w-40 right-0 z-10"
             style={{ top: '100%', marginTop: '10px' }} // Positioning the dropdown below the image
           >
-            <Link
-              to="/dashboard/profile"
-              className="block px-4 py-2 hover:bg-gray-100"
-            >
+            <Link to="/dashboard/profile" className="block px-4 py-2 hover:bg-gray-100">
               Profile
             </Link>
-            {/* Removed Logout button from here */}
           </div>
         )}
       </div>
 
       {/* Navigation Links */}
-      <div className="space-y-6 mt-10"> {/* Added margin for spacing */}
-        <Link
-          to="/dashboard/overview"
-          className={`flex items-center  text-2xl space-x-2 hover:text-teal-700 ${isCollapsed ? 'justify-center' : ''}`}
-        >
+      <div className="space-y-6 mt-10">
+        <Link to="/dashboard/overview" className={`flex items-center text-2xl space-x-2 hover:text-teal-700 ${isCollapsed ? 'justify-center' : ''}`}>
           <FiHome />
           {!isCollapsed && <span>Overview</span>}
         </Link>
 
-        <Link
-          to="/dashboard/add-product"
-          className={`flex items-center space-x-2 text-2xl hover:text-teal-700 ${isCollapsed ? 'justify-center' : ''}`}
-        >
+        <Link to="/dashboard/post-ad" className={`flex items-center space-x-2 text-2xl hover:text-teal-700 ${isCollapsed ? 'justify-center' : ''}`}>
           <FiPlusCircle />
-          {!isCollapsed && <span>Add New Product</span>}
+          {!isCollapsed && <span>Post Ad</span>}
         </Link>
 
-        <Link
-          to="/dashboard/view-products"
-          className={`flex items-center  text-2xl space-x-2 hover:text-teal-700 ${isCollapsed ? 'justify-center' : ''}`}
-        >
+        <Link to="/dashboard/view-ads" className={`flex items-center text-2xl space-x-2 hover:text-teal-700 ${isCollapsed ? 'justify-center' : ''}`}>
           <FiEye />
-          {!isCollapsed && <span>View Products</span>}
+          {!isCollapsed && <span>View Ads</span>}
         </Link>
       </div>
     </div>

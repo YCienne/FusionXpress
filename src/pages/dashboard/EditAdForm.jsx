@@ -1,14 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';  // Import react-toastify for success messages
+// import { apiUpdateAdvert } from '../../services/vendor'; // Go up two levels to reach the services folder
 
-const EditProductForm = ({ product, onUpdate, onCancel }) => {
+const EditAdForm = ({ advertId, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({
-    title: product.title,
-    description: product.description,
-    price: product.price,
-    category: product.category,
+    title: '',
+    description: '',
+    price: '',
+    category: '',
     image: null, // Initially, image is null
   });
+
+  // Dummy data for testing
+  const dummyAdvert = {
+    title: 'Sample Advert',
+    description: 'This is a sample advert description.',
+    price: '99.99',
+    category: 'Electronics',
+    image: 'path_to_sample_image.jpg', // Replace with actual image path or URL
+  };
+
+  useEffect(() => {
+    // Fetch advert details based on advertId (use dummy data for now)
+    const fetchAdvert = async () => {
+      try {
+        // const response = await apiGetAdvert(advertId); // Uncomment when ready
+        // const advert = response.data; // Assuming the advert data is returned in the response
+        // setFormData(advert); // Set the form data with the fetched advert
+
+        // For now, using dummy data
+        setFormData(dummyAdvert); 
+      } catch (error) {
+        console.error('Error fetching advert:', error);
+      }
+    };
+
+    fetchAdvert();
+  }, [advertId]);
 
   // Handle input changes for text fields
   const handleInputChange = (e) => {
@@ -28,19 +56,40 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
     });
   };
 
-  // Handle form submission for editing the product
-  const handleSubmit = (e) => {
+  // Handle form submission for editing the advert
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Trigger the onUpdate function passed down as a prop
-    onUpdate(formData);
+    try {
+      // Create a FormData object to handle image uploads
+      const updatedData = new FormData();
+      updatedData.append('title', formData.title);
+      updatedData.append('description', formData.description);
+      updatedData.append('price', formData.price);
+      updatedData.append('category', formData.category);
+      if (formData.image) {
+        updatedData.append('image', formData.image);
+      }
 
-    // Display a success toast message after editing
-    toast.success('Product updated successfully!');
+      // Call the apiUpdateAdvert function to update the advertisement
+      // const response = await apiUpdateAdvert(advertId, updatedData); // Uncomment when ready
+      // if (response.status === 200) {
+      //   onUpdate(response.data); // Trigger the onUpdate function with updated advert data
+      //   toast.success('Advert updated successfully!');
+      // }
+
+      // For now, simulate a successful update
+      onUpdate({ ...formData, id: advertId }); // Dummy update
+      toast.success('Advert updated successfully!'); // Dummy success message
+
+    } catch (error) {
+      console.error('Error updating advert:', error);
+      toast.error('Failed to update advert.'); // Error handling
+    }
   };
 
   return (
     <div className="bg-white p-6 shadow-md rounded-lg">
-      <h2 className="text-lg font-semibold mb-4">Edit Product</h2>
+      <h2 className="text-lg font-semibold mb-4">Edit Advert</h2>
 
       {/* Title Input */}
       <div className="mb-4">
@@ -92,10 +141,10 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
       {/* Current Image Display */}
       <div className="mb-4">
         <label className="block text-gray-700">Current Image</label>
-        {product.image && (
+        {dummyAdvert.image && (
           <img
-            src={product.image}
-            alt="Product"
+            src={dummyAdvert.image}
+            alt="Advert"
             className="w-32 h-32 object-cover rounded-lg"
           />
         )}
@@ -103,7 +152,7 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
 
       {/* Image Upload Input for Editing */}
       <div className="mb-4">
-        <label className="block text-gray-700">Update Product Image</label>
+        <label className="block text-gray-700">Update Advert Image</label>
         <input
           type="file"
           name="image"
@@ -134,4 +183,4 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
   );
 };
 
-export default EditProductForm;
+export default EditAdForm;

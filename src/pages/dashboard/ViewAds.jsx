@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'; // Import icons for edit and delete
 import DeleteProductModal from '../../components/DeleteProductModal'; // Import your delete modal component
 
-const ViewProducts = () => {
+const ViewAds = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -85,4 +85,4 @@ const ViewProducts = () => {
   );
 };
 
-export default ViewProducts;
+export default ViewAds;
