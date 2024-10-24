@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiVendorSignup } from "../../services/auth";
+import loadingGif from "../../assets/loading.gif"; // Import loading GIF
 
 const VendorSignupForm = () => {
   const [loading, setLoading] = useState(false);
@@ -19,10 +20,9 @@ const VendorSignupForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Show loading GIF
 
     try {
-      setLoading(true);
-
       const payload = {
         fullName,
         email,
@@ -32,15 +32,15 @@ const VendorSignupForm = () => {
         // profilePicture,
         role: "vendor",
       };
-      const response = await apiVendorSignup(payload); // Replace with your API logic
-      navigate("/login");
+      const response = await apiVendorSignup(payload); 
       console.log(response.data);
       // Show success toast: "Registered successfully"
+      navigate("/login");
     } catch (error) {
       console.log(error);
       // Show error toast
     } finally {
-      setLoading(false);
+      setLoading(false); // Hide loading GIF
     }
   };
 
@@ -130,8 +130,13 @@ const VendorSignupForm = () => {
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+            disabled={loading} // Disable button while loading
           >
-            {loading ? "Loading..." : "Sign Up"}
+            {loading ? (
+              <img src={loadingGif} alt="Loading..." className="h-6 mx-auto" /> // Show loading GIF
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
       </div>

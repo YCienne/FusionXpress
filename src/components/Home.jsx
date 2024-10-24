@@ -1,80 +1,96 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import kitchen1 from '../assets/images/kitchen1.jpg';
 import cosmetic1 from '../assets/images/cosmetic1.jpg';
 import fashion from '../assets/images/fashion.jpg';
 import black3 from '../assets/images/black3.jpg';
 import cosmetic2 from '../assets/images/cosmetic2.jpg';
-import cosmetic4 from '../assets/images/cosmetic4.jpg';
-import cart from '../assets/images/cart.jpg';
+import nutri from '../assets/nutri.jpg';
+import house2 from '../assets/house2.jpg';
+import ladies3 from '../assets/ladies3.jpg';
+import sneaker1 from '../assets/sneaker1.jpg';
+import bag from '../assets/bag.jpg';
+
+// Import category images from the 'cats' folder
+import bed1 from '../assets/cats/bed1.jpg';
+import fash from '../assets/cats/fash.jpg';
+import electronics from '../assets/cats/electronics.jpg';
+import estate from '../assets/cats/estate.jpg';
+import lipstick from '../assets/cats/lipstick.jpg';
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [currentSpecialSlide, setCurrentSpecialSlide] = useState(0);
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate();
 
   const slides = [
-    { image: kitchen1, title: "Cozy Home Deals", description: "Revamp Your Kitchen Today With Incredible Deals From FusionXpress!" },
-    { image: cosmetic1, title: "Treat Your Skin Beautifully", description: "Stunning Products To Help You Feel Your Best" },
-    { image: fashion, title: "Express Your Style", description: "Dress to impress and make the best of everyday" },
-    { image: black3, title: "Super Sales", description: "Special Offers You Can't Resist" },
-    { image: cosmetic2, title: "Beauty Deals For Everyone", description: "Take Care Of Your Skin To Make Sure You Are Always Going" }
+    { image: kitchen1, title: "Cozy Home Deals", description: "Revamp Your Kitchen Today With Incredible Deals From FusionXpress!", color: "text-yellow-300" },
+    { image: cosmetic1, title: "Treat Your Skin Beautifully", description: "Stunning Products To Help You Feel Your Best", color: "text-pink-400" },
+    { image: fashion, title: "Express Your Style", description: "Dress to impress and make the best of everyday", color: "text-blue-500" },
+    { image: black3, title: "Super Sales", description: "Special Offers You Can't Resist", color: "text-red-400" },
+    { image: cosmetic2, title: "Beauty Deals For Everyone", description: "Take Care Of Your Skin To Make Sure You Are Always Going", color: "text-purple-300" }
   ];
 
-  const circularImages = [
-    { image: "https://picsum.photos/id/200/400/400", title: "FASHION" },
-    { image: "https://picsum.photos/id/201/400/400", title: "BEAUTY" },
-    { image: "https://picsum.photos/id/202/400/400", title: "HOME" },
-    { image: "https://picsum.photos/id/203/400/400", title: "REAL ESTATE" },
-    { image: "/assets/images/home2.jpg", title: "ELECTRONICS" }
-  ];
+  const textSlide = {
+    title: "Welcome to FusionXpress",
+    description: "Explore a world of variety at your convenience.",
+    color: "text-white",
+  };
 
-  const specialSlides = [
-    { image: cart, text: "Looking for anything special? We got you." },
-    { image: cosmetic4, text: "Discover exclusive offers just for you." },
-    { image: "https://picsum.photos/id/1070/1200/500", text: "Limited time deals you won't want to miss!" },
-    { image: "https://picsum.photos/id/1080/1200/500", text: "Exclusive discounts available now." },
-    { image: "https://picsum.photos/id/1090/1200/500", text: "Check out our best-selling products!" }
+  // Updated category images array
+  const categoryImages = [
+    { image: bed1, title: "HOME" },
+    { image: fash, title: "FASHION" },
+    { image: electronics, title: "ELECTRONICS" },
+    { image: estate, title: "REAL ESTATE" },
+    { image: lipstick, title: "BEAUTY" }
   ];
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSpecialSlide((prev) => (prev === specialSlides.length - 1 ? 0 : prev + 1));
-    }, 5000);
+      setCurrentSlide((prev) => (prev + 1) % (slides.length + 1)); // Loop through the slides
+    }, 5000); // Change slide every 5 seconds
     return () => clearInterval(timer);
   }, []);
 
   const handleCategoryClick = () => {
-    navigate(`/home/category-list`); // Navigate to the Category List page
+    navigate(`/home/category-list`);
+  };
+
+  const handleViewAllProductsClick = () => {
+    navigate('/home/adverts');
   };
 
   return (
     <div className="min-h-screen bg-gray-100 px-[40px]">
       {/* Banner Carousel */}
       <div className="relative h-[500px] rounded-l-3xl rounded-r-3xl overflow-hidden">
+        {/* Text-only Slide */}
+        <div className={`absolute w-full h-full transition-transform duration-500 ease-in-out ${currentSlide === 0 ? 'translate-x-0' : '-translate-x-full'}`}>
+          <div className="relative h-full bg-gradient-to-r from-blue-600 to-purple-500 flex items-center justify-center">
+            <div className="text-center">
+              <h1 className={`text-4xl font-bold ${textSlide.color} mb-4`}>{textSlide.title}</h1>
+              <p className={`text-2xl ${textSlide.color}`}>{textSlide.description}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Regular Slides */}
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute w-full h-full transition-transform duration-500 ease-in-out ${index === currentSlide ? 'translate-x-0' : 'translate-x-full'}`}
-            style={{ transform: `translateX(${(index - currentSlide) * 100}%)` }}
+            className={`absolute w-full h-full transition-transform duration-500 ease-in-out ${currentSlide === index + 1 ? 'translate-x-0' : 'translate-x-full'}`}
+            style={{ transform: `translateX(${(index + 1 - currentSlide) * 100}%)` }}
           >
             <img
               src={slide.image}
               alt={slide.title}
-              className="w-full h-full object-cover object-top" // Ensuring full coverage with top alignment
+              className="w-full h-full object-cover object-top"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center">
               <div className="container mx-auto px-4 md:px-6 h-full flex items-center">
-                <div className="text-white max-w-lg">
+                <div className={`max-w-lg ${slide.color}`}>
                   <h1 className="text-3xl md:text-4xl font-bold mb-4">{slide.title}</h1>
-                  <p className="text-2xl text-black font-bold md:text-xl">{slide.description}</p>
+                  <p className="text-2xl font-bold md:text-xl">{slide.description}</p>
                 </div>
               </div>
             </div>
@@ -83,7 +99,7 @@ const Home = () => {
 
         {/* Slide Indicators */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-          {slides.map((_, index) => (
+          {[...Array(slides.length + 1)].map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
@@ -97,60 +113,53 @@ const Home = () => {
       <div className="container mx-auto px-4 md:px-6 py-16 text-center">
         <h2 className="text-3xl font-bold mb-4">Featured Categories</h2>
 
-        {/* Circular Images Section */}
-        <div className="container mx-auto px-4 md:px-6 py-16">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-            {circularImages.map((item, index) => (
-              <div key={index} className="flex flex-col items-center cursor-pointer" onClick={() => handleCategoryClick()}>
-                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 shadow-lg">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <h3 className="text-lg md:text-xl font-semibold text-gray-800">{item.title}</h3>
+        {/* Category Cards Section */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          {categoryImages.map((item, index) => (
+            <div key={index} className="flex flex-col items-center cursor-pointer" onClick={handleCategoryClick}>
+              <div className="w-40 h-40 mb-4 shadow-lg rounded-lg overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
-            ))}
-          </div>
+              <h3 className="text-lg md:text-xl font-semibold text-gray-800">{item.title}</h3>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Special Offers Banner */}
-      <div className="relative h-[500px] rounded-l-3xl rounded-r-3xl overflow-hidden">
-        {specialSlides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute w-full h-full transition-transform duration-500 ease-in-out ${index === currentSpecialSlide ? 'translate-x-0' : 'translate-x-full'}`}
-            style={{ transform: `translateX(${(index - currentSpecialSlide) * 100}%)` }}
+      {/* Popular Adverts Section */}
+      <div className="container mx-auto px-4 md:px-6 py-16 text-center">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-3xl font-bold">Popular Adverts</h2>
+          <button 
+            className="bg-gradient-to-r from-teal-400 to-blue-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition"
+            onClick={handleViewAllProductsClick}
           >
-            <img
-              src={slide.image}
-              alt="Special Offer"
-              className="w-full h-full object-cover object-top" // Ensuring full coverage with top alignment
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center">
-              <div className="container mx-auto px-4 md:px-6">
-                <div className="text-white max-w-lg">
-                  <h2 className="text-2xl md:text-4xl font-bold mb-4">{slide.text}</h2>
-                  <button className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition">
-                    View All Products
-                  </button>
-                </div>
+            View All Adverts
+          </button>
+        </div>
+
+        {/* Adjusted Grid for Popular Adverts */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {[ // Popular adverts data
+            { image: ladies3, title: "Ladies Fashion", description: "Stylish outfits for women", price: "$45.00" },
+            { image: sneaker1, title: "Sneaker Collection", description: "Latest sneaker styles", price: "$89.99" },
+            { image: nutri, title: "Nutri", description: "Healthy food options", price: "$12.99" },
+            { image: house2, title: "House for Sale", description: "Lovely 3 bedroom house", price: "$300,000" },
+            { image: bag, title: "Fashion Bag", description: "Trendy handbag for all occasions", price: "$55.00" }
+          ].map((item, index) => (
+            <div key={index} className="relative bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 group">
+              <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-xl text-white font-semibold">{item.title}</h3>
+                <p className="text-white">{item.description}</p>
+                <p className="text-yellow-400 font-bold">{item.price}</p>
               </div>
             </div>
-          </div>
-        ))}
-
-        {/* Slide Indicators for Special Offers */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-          {specialSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSpecialSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${index === currentSpecialSlide ? 'bg-white' : 'bg-white bg-opacity-50'}`}
-            />
-          ))}
+          ))}  
         </div>
       </div>
     </div>
