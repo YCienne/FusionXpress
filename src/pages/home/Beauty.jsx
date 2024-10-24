@@ -1,21 +1,21 @@
-// import audi from '../../assets/ads/audi.png'
-import { vehicles } from "../../services/groups.js";
 
-const Cars = () => {
+import { beauty } from "../../services/category.js";
+
+const Beauty = () => {
   return (
     <section>
       <div
         id="alignment-container"
         className="w-[80%] mx-auto flex flex-col gap-y-[2rem] py-[3rem]"
       >
-        <h4 className="text-[2rem] font-medium">Cars</h4>
+        <h4 className="text-[2rem] font-medium">Beauty</h4>
         <div
           id="ad-cards"
           className="grid grid-cols-3 grid-rows-2 gap-x-[1rem] gap-y-[1.5rem]"
         >
           {/* card */}
-            {vehicles.CARS.map((car, index) => {
-                console.log(car);
+            {beauty.MAKEUP.map((item, index) => {
+                console.log(item);
                 return (
                   <div
                     key={index}
@@ -23,15 +23,15 @@ const Cars = () => {
                   >
                     <div className="image w-[44%] h-[100%] rounded-l-[6px] shadow-sm flex justify-center items-center overflow-hidden">
                       <img
-                        src={car.image}
+                        src={item.image}
                         alt="Image of ad"
                         className="w-[100%] h-[100%] object-cover rounded-[inherit]  "
                       />
                     </div>
                     <div className="text w-[56%] h-[100%] p-[20px] flex flex-col justify-center gap-y-[0.5rem]">
-                      <h5 className="font-medium">{car.title}</h5>
+                      <h5 className="font-medium">{item.title}</h5>
                       <h4 className=" font-semibold text-[1.3rem] text-[#e41e1b]">
-                        {car.price}
+                        {item.price}
                       </h4>
                     </div>
                   </div>
@@ -46,4 +46,4 @@ const Cars = () => {
   );
 }
 
-export default Cars;
+export default Beauty;

@@ -1,20 +1,20 @@
 // import audi from '../../assets/ads/audi.png'
-import { fashion } from "../../services/groups.js";
+import { rent } from "../../services/category.js";
 
-const Furniture = () => {
+const RealEstate = () => {
   return (
     <section>
       <div
         id="alignment-container"
         className="w-[80%] mx-auto flex flex-col gap-y-[2rem] py-[3rem]"
       >
-        <h4 className="text-[2rem] font-medium">Furniture</h4>
+        <h4 className="text-[2rem] font-medium">Real Estate</h4>
         <div
           id="ad-cards"
           className="grid grid-cols-3 grid-rows-2 gap-x-[1rem] gap-y-[1.5rem]"
         >
           {/* card */}
-          {fashion.FASH.map((item, index) => {
+          {rent.HOUSES.map((item, index) => {
             console.log(item);
             return (
               <div
@@ -43,4 +43,4 @@ const Furniture = () => {
   );
 };
 
-export default Furniture;
+export default RealEstate;
