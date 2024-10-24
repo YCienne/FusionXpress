@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTh, FaList } from "react-icons/fa";
-import dummyAdvert from "../../../data.json"
-
+import dummyAdvert from "../../../data.json";
+import { apiGetAllAdverts } from "../../services/user";
 
 const AdvertList = () => {
-  
-  const [adverts] = useState(dummyAdvert);
+  const [adverts, setAdverts] = useState([]);
   const [view, setView] = useState("grid"); // 'grid' or 'list'
   const [categoryFilter, setCategoryFilter] = useState("all"); // Category filter
   const [sortOrder, setSortOrder] = useState("default"); // Sort order
   const [searchTerm, setSearchTerm] = useState(""); // Search term
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const itemsPerPage = 5; // Number of items per page
+
+  const fetchAdverts = async () => {
+    try {
+      const res = await apiGetAllAdverts();
+      console.log("Adverts--->", res.data);
+      setAdverts(res.data.data)
+    } catch (error) {
+      console.log("Error fetching advert", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAdverts();
+  }, []);
 
   // Function to filter and sort adverts
   const filteredAdverts = () => {
@@ -133,14 +146,14 @@ const AdvertList = () => {
                 : "flex flex-col"
             }
           >
-            {currentAdverts().map((advert) => (
+            {adverts.map((advert) => (
               <Link
                 to={`/home/advert/${advert.id}`} // Changed to ensure correct path
                 key={advert.id}
                 className={`border p-4 rounded-lg shadow-md transition-transform transform hover:scale-105`}
               >
                 <img
-                  src={advert.image}
+                  src={`https://savefiles.org/${advert.image}?shareable_link=461`}
                   alt={advert.name}
                   className="w-full h-64 object-cover mb-2 rounded-md"
                 />

@@ -23,6 +23,11 @@ const LoginForm = () => {
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.accessToken);
+        
+        // this is to get user profile
+        // const profileResponse =await apiGetProfile();
+        // console.log(profileResponse.data)
+
         toast.success('Login successful!');
         navigate('/dashboard');
       }

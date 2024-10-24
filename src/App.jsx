@@ -31,7 +31,7 @@ function App() {
           <Route path="/login/user" element={<UserLoginForm />} />
           {/* Vendor Login page route */}
           <Route path="/login/vendor" element={<LoginForm />} /> {/* Updated to use LoginForm */}
-          Forgot Password page route
+          {/* Forgot Password page route */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           {/* User Signup page route */}
           <Route path="/signup/user" element={<UserSignupForm />} />
@@ -51,7 +51,7 @@ function App() {
           {/* Home layout for advert-related routes */}
           <Route path="/home" element={<HomeLayout />}>
             <Route index element={<Home />} /> {/* Home page */}
-            <Route path="category-list" element={<CategoryList />} /> {/* CategoryList page */}
+            <Route path="category/:category" element={<CategoryList />} /> {/* CategoryList page */}
             <Route path="adverts" element={<AdvertList />} /> {/* AdvertList page */}
             <Route path="advert/:id" element={<AdvertDetails />} /> {/* AdvertDetails page */}
           </Route>

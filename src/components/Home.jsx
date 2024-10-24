@@ -52,8 +52,9 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleCategoryClick = () => {
-    navigate(`/home/category-list`);
+  // Handle click on a category and navigate to corresponding category page
+  const handleCategoryClick = (category) => {
+    navigate(`/home/category/${category.toLowerCase()}`);
   };
 
   const handleViewAllProductsClick = () => {
@@ -116,7 +117,7 @@ const Home = () => {
         {/* Category Cards Section */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {categoryImages.map((item, index) => (
-            <div key={index} className="flex flex-col items-center cursor-pointer" onClick={handleCategoryClick}>
+            <div key={index} className="flex flex-col items-center cursor-pointer" onClick={() => handleCategoryClick(item.title)}>
               <div className="w-40 h-40 mb-4 shadow-lg rounded-lg overflow-hidden">
                 <img
                   src={item.image}

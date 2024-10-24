@@ -1,9 +1,9 @@
 import { apiClient } from "./config";
 
 // Get Vendor Registration Details
-export const apiGetVendorDetails = async (vendorId) => {
+export const apiGetVendorData = async (vendorId) => {
   try {
-    const response = await apiClient.get(`/vendors/${vendorId}`);
+    const response = await apiClient.get("/vendors/me");
     return response.data;
   } catch (error) {
     console.error("Error fetching vendor details:", error);
@@ -12,9 +12,9 @@ export const apiGetVendorDetails = async (vendorId) => {
 };
 
 // Update Vendor Registration Details
-export const apiUpdateVendorDetails = async (vendorId, payload) => {
+export const apiUpdateVendorData = async (vendorId, payload) => {
   try {
-    const response = await apiClient.patch(`/vendors/${vendorId}`, payload);
+    const response = await apiClient.patch(`/vendors/me`, payload);
     return response.data;
   } catch (error) {
     console.error("Error updating vendor details:", error);
@@ -48,6 +48,7 @@ export const apiGetAdvert = async (advertId) => {
   }
 };
 
+
 // Update Advert
 export const apiUpdateAdvert = async (advertId, payload) => {
   try {
@@ -79,4 +80,9 @@ export const apiGetVendorStats = async (vendorId) => {
     console.error("Error fetching vendor stats:", error);
     throw error;
   }
+};
+
+// Get Vendor Adverts
+export const apiGetVendorAdverts = async () => {
+  return apiClient.get("/vendors/me/adverts?limit=0");
 };
