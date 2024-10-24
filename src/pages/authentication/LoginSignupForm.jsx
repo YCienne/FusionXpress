@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import SignupSelectionModal from './SignupSelectionModal';
 import LoginForm from './LoginForm';
-import UserSignupForm from './UserSignupForm';
-import VendorSignupForm from './VendorSignupForm';
+import UserLoginForm from './UserLoginForm';
+import VendorSignupForm from './VendorSignupForm'; // Assuming you have this form created
+import UserSignupForm from './UserSignupForm'; // Assuming you have this form created
 
 const LoginSignupForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [signupType, setSignupType] = useState(null); // Can be 'user' or 'vendor'
-  const [showLogin, setShowLogin] = useState(false);  // Track whether to show the login form
+  const [authType, setAuthType] = useState(null); // 'login' or 'signup'
+  const [loginType, setLoginType] = useState(null); // 'user' or 'vendor'
+  const [showForm, setShowForm] = useState(false); // Show login/signup form
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const handleOpenModal = (type) => {
+    setAuthType(type); // Set to either 'login' or 'signup'
+    setIsModalOpen(true); // Open modal
   };
 
   const handleCloseModal = () => {
@@ -18,55 +21,49 @@ const LoginSignupForm = () => {
   };
 
   const handleSelectUser = () => {
-    setSignupType('user');
-    handleCloseModal();
+    setLoginType('user'); // Set login type to 'user'
+    setShowForm(true); // Show login/signup form based on authType
+    handleCloseModal(); // Close modal
   };
 
   const handleSelectVendor = () => {
-    setSignupType('vendor');
-    handleCloseModal();
-  };
-
-  const handleShowLogin = () => {
-    setShowLogin(true);   // Show the login form
-    setSignupType(null);  // Hide signup forms
+    setLoginType('vendor'); // Set login type to 'vendor'
+    setShowForm(true); // Show login/signup form based on authType
+    handleCloseModal(); // Close modal
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <h1 className="text-4xl font-bold mb-6">Welcome to FusionXpress</h1>
 
-      {/* If no form is selected, show buttons for login and sign up */}
-      {!signupType && !showLogin && (
+      {!showForm && (
         <>
           <button
             className="w-64 bg-blue-600 text-white font-bold py-3 rounded-lg mb-4 hover:bg-blue-700"
-            onClick={handleShowLogin} // Show login form on click
+            onClick={() => handleOpenModal('login')} // Open login modal
           >
             Login
           </button>
           <button
             className="w-64 bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600"
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal('signup')} // Open signup modal
           >
             Sign Up
           </button>
         </>
       )}
 
-      {/* Render the login form */}
-      {showLogin && <LoginForm />}
+      {/* Conditionally render login or signup forms */}
+      {showForm && loginType === 'vendor' && (authType === 'login' ? <LoginForm /> : <VendorSignupForm />)}
+      {showForm && loginType === 'user' && (authType === 'login' ? <UserLoginForm /> : <UserSignupForm />)}
 
-      {/* Render the User or Vendor Signup Form based on the user's selection */}
-      {signupType === 'user' && <UserSignupForm />}
-      {signupType === 'vendor' && <VendorSignupForm />}
-
-      {/* Modal for selecting between User and Vendor */}
+      {/* Reuse the same modal for both login and signup */}
       <SignupSelectionModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSelectUser={handleSelectUser}
         onSelectVendor={handleSelectVendor}
+        type={authType} // Pass 'login' or 'signup' to the modal
       />
     </div>
   );

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { apiLogin } from '../../services/auth'; 
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { apiUserLogin } from '../../services/auth'; // Import your API call
+import { useNavigate } from "react-router-dom";
 import loadingGif from "../../assets/loading.gif"; // Import loading GIF
 
-const LoginForm = () => {
+const UserLoginForm = () => {
   const [loading, setLoading] = useState(false); // Loading state for showing GIF
-  const navigate = useNavigate(); // Initialize navigate for redirection
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,18 +16,16 @@ const LoginForm = () => {
     const formData = new FormData(event.target);
     const email = formData.get("email");
     const password = formData.get("password");
-    
-    try {
-      const response = await apiLogin({ email, password }); // Include the role in the payload
-      console.log(response.data);
 
+    try {
+      const response = await apiUserLogin({ email, password }); // Make API call
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("token", response.data.accessToken); // Store token
         toast.success('Login successful!');
-        navigate('/dashboard');
+        navigate('/home'); // Redirect to home page after successful login
       }
     } catch (error) {
-      toast.error('Login failed. Please check your credentials.');
+      toast.error(error.response?.data?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false); // Hide loading GIF
     }
@@ -39,7 +37,7 @@ const LoginForm = () => {
         className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Vendor Login</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">User Login</h2>
 
         <div className="mb-4">
           <label
@@ -104,4 +102,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default UserLoginForm;
