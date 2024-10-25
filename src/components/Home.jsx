@@ -38,11 +38,11 @@ const Home = () => {
 
   // Updated category images array
   const categoryImages = [
-    { image: bed1, title: "HOME", route: "home" },
-    { image: fash, title: "FASHION", route: "fashion" },
-    { image: electronics, title: "ELECTRONICS", route: "electronics" },
-    { image: estate, title: "REAL ESTATE", route: "real-estate" },
-    { image: lipstick, title: "BEAUTY", route: "beauty" }
+    { image: bed1, title: "HOME" },
+    { image: fash, title: "FASHION" },
+    { image: electronics, title: "ELECTRONICS" },
+    { image: estate, title: "REAL ESTATE" },
+    { image: lipstick, title: "BEAUTY" }
   ];
 
   useEffect(() => {
@@ -53,8 +53,8 @@ const Home = () => {
   }, []);
 
   // Handle click on a category and navigate to corresponding category page
-  const handleCategoryClick = (route) => {
-    navigate(`/home/category/${route}`);
+  const handleCategoryClick = (category) => {
+    navigate(`/home/category/${category.toLowerCase()}`);
   };
 
   const handleViewAllProductsClick = () => {
@@ -117,7 +117,7 @@ const Home = () => {
         {/* Category Cards Section */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {categoryImages.map((item, index) => (
-            <div key={index} className="flex flex-col items-center cursor-pointer" onClick={() => handleCategoryClick(item.route)}>
+            <div key={index} className="flex flex-col items-center cursor-pointer" onClick={() => handleCategoryClick(item.title)}>
               <div className="w-40 h-40 mb-4 shadow-lg rounded-lg overflow-hidden">
                 <img
                   src={item.image}

@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardLayout from './layouts/DashboardLayout';
 import HomeLayout from './layouts/HomeLayout'; // Import HomeLayout
-import CategoryLayout from './layouts/CategoryLayout'; // Import CategoryLayout
 import Overview from './pages/dashboard/Overview';
 import PostAdForm from './pages/dashboard/PostAdForm';
 import ViewAds from './pages/dashboard/ViewAds';
@@ -19,11 +18,7 @@ import Profile from './pages/dashboard/Profile'; // Import Profile component
 import AdvertList from './pages/userend/AdvertList'; // Import AdvertList component
 import AdvertDetails from './pages/userend/AdvertDetails'; // Import AdvertDetails component
 import Home from './components/Home'; // Import Home component
-import Beauty from './pages/home/Beauty'; // Import Beauty component
-import Fashion from './pages/home/Fashion'; // Import Fashion component
-import Electronics from './pages/home/Electronics'; // Import Electronics component
-import RealEstate from './pages/home/RealEstate'; // Import RealEstate component
-import HomeCategory from './pages/home/Home'; // Import Home category component
+import CategoryList from './pages/userend/CategoryList'; // Import CategoryList component
 
 function App() {
   return (
@@ -56,11 +51,10 @@ function App() {
           {/* Home layout for advert-related routes */}
           <Route path="/home" element={<HomeLayout />}>
             <Route index element={<Home />} /> {/* Home page */}
+            <Route path="category/:category" element={<CategoryList />} /> {/* CategoryList page */}
             <Route path="adverts" element={<AdvertList />} /> {/* AdvertList page */}
             <Route path="advert/:id" element={<AdvertDetails />} /> {/* AdvertDetails page */}
           </Route>
-
-         
 
           {/* Redirect to landing if route is not matched */}
           <Route path="*" element={<Navigate to="/" replace />} />
