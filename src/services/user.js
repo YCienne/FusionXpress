@@ -1,8 +1,8 @@
 import { apiClient } from "./config";
 
 // Get All Adverts
-export const apiGetAllAdverts = async () => {
-  return apiClient.get("/adverts?limit=0");
+export const apiGetAllAdverts = async (filter, sort) => {
+  return apiClient.get(`/adverts?filter=${filter}&limit=0&sort=${sort}`);
 };
 
 // Get Advert Details

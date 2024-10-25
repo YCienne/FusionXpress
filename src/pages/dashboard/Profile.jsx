@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import Loader from "../../components/Loader"; // Import the Loader component
 import { apiGetVendorData, apiUpdateVendorData } from "../../services/vendor"; // Import the vendor API functions
 
 const Profile = () => {
+  const navigate = useNavigate(); // Initialize navigate function
+
   // State to hold vendor details and loading state
   const [vendor, setVendor] = useState({
     fullName: "",
     email: "",
     phone: "",
     username: "",
-    profileImage: null, // Added field for profile image
+    // profileImage: null, // Added field for profile image
   });
   const [loading, setLoading] = useState(true); // State to manage loading
   const [isSaving, setIsSaving] = useState(false); // State to manage saving
@@ -57,6 +60,9 @@ const Profile = () => {
       await apiUpdateVendorData(vendor);
       setSuccess("Profile updated successfully!"); // Success message
       setError(null); // Clear any previous errors
+
+      // Route to the Overview page after successful save
+      navigate("/dashboard/overview");
     } catch (error) {
       console.error("Error updating vendor data:", error);
       setError("Failed to save changes."); // Error message

@@ -24,9 +24,9 @@ const Home = () => {
 
   const slides = [
     { image: kitchen1, title: "Cozy Home Deals", description: "Revamp Your Kitchen Today With Incredible Deals From FusionXpress!", color: "text-yellow-300" },
-    { image: cosmetic1, title: "Treat Your Skin Beautifully", description: "Stunning Products To Help You Feel Your Best", color: "text-pink-400" },
-    { image: fashion, title: "Express Your Style", description: "Dress to impress and make the best of everyday", color: "text-blue-500" },
-    { image: black3, title: "Super Sales", description: "Special Offers You Can't Resist", color: "text-red-400" },
+    { image: cosmetic1, title: "Treat Your Skin Beautifully", description: "Stunning Products To Help You Feel Your Best", color: "text-[#325B05]" },
+    { image: fashion, title: "Express Your Style", description: "Dress to impress and make the best of everyday", color: "text-brown-400" },
+    { image: black3, title: "Super Sales", description: "Special Offers You Can't Resist", color: "text-brown-400" },
     { image: cosmetic2, title: "Beauty Deals For Everyone", description: "Take Care Of Your Skin To Make Sure You Are Always Going", color: "text-purple-300" }
   ];
 

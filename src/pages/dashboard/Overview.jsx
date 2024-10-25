@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import overviewImage1 from '../../assets/images/overview1.jpg';
 import overviewImage3 from '../../assets/images/overview3.jpg';
-// import { apiGetVendorStatistics } from '../../services/vendor'; // Uncomment when API is ready
 
 const Overview = () => {
   const [statistics, setStatistics] = useState({
-    recentlyViewedAds: [],
-    totalAds: 0,
-    frequentlyViewedAds: [],
-    recentlyUploadedAds: [],
+    recentlyViewedAds: ['Ad A', 'Ad B', 'Ad C'],
+    totalAds: 2,
+    frequentlyViewedAds: ['Ad D', 'Ad B', 'Ad F'],
+    recentlyUploadedAds: ['Ad G', 'Ad H', 'Ad I'],
   });
 
-  // Fetch vendor statistics from the API when the component mounts
+  // Fetch vendor statistics from the API when the component mounts (Uncomment when API is ready)
   // useEffect(() => {
   //   const fetchVendorStatistics = async () => {
   //     try {
-  //       const response = await apiGetVendorStatistics(); // Fetch data from API
+  //       const response = await apiGetVendorStatistics();
   //       setStatistics({
   //         recentlyViewedAds: response.recentlyViewedAds,
   //         totalAds: response.totalAds,
@@ -26,7 +25,7 @@ const Overview = () => {
   //       console.error("Failed to fetch vendor statistics", error);
   //     }
   //   };
-
+  //
   //   fetchVendorStatistics();
   // }, []);
 
@@ -42,7 +41,7 @@ const Overview = () => {
         {/* Total Ads in Account */}
         <div className="bg-gradient-to-r from-teal-400 to-blue-500 p-6 shadow-md rounded-lg">
           <h2 className="text-lg font-semibold mb-2">Total Ads In Account</h2>
-          <p>{statistics.totalAds || '0 Ads'}</p>
+          <p>{statistics.totalAds || 'No ads available'}</p>
         </div>
 
         {/* Frequently Viewed Ads */}
