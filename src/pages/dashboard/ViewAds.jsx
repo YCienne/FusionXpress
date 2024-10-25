@@ -1,32 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import { toast } from 'react-toastify';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import DeleteProductModal from '../../components/DeleteProductModal';
-import Modal from 'react-modal';
 import { apiGetVendorAdverts } from '../../services/vendor';
 
 const ViewAds = () => {
   const [adverts, setAdverts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedAdvert, setSelectedAdvert] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
-  const sampleAdverts = [
-    { id: 1, title: 'Advert 1', description: 'Description 1', price: '10.00', category: 'Electronics', image: null },
-    { id: 2, title: 'Advert 2', description: 'Description 2', price: '15.00', category: 'Clothing', image: null },
-    { id: 3, title: 'Advert 3', description: 'Description 3', price: '20.00', category: 'Home', image: null },
-    { id: 4, title: 'Advert 4', description: 'Description 4', price: '25.00', category: 'Toys', image: null },
-    { id: 5, title: 'Advert 5', description: 'Description 5', price: '30.00', category: 'Books', image: null },
-  ];
-
 
   const fetchAdverts = async () => {
     try {
       const res = await apiGetVendorAdverts();
       console.log("Adverts--->", res.data);
-      setAdverts(res.data.data)
+      setAdverts(res.data.data);
       setIsLoading(false);
     } catch (error) {
       console.log("Error fetching advert", error);
@@ -37,21 +27,10 @@ const ViewAds = () => {
     fetchAdverts();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchAdverts = async () => {
-  //     setTimeout(() => {
-  //       setAdverts(sampleAdverts);
-  //       setIsLoading(false);
-  //     }, 1000);
-  //   };
-
-  //   fetchAdverts();
-  // }, []);
-
   const handleDelete = (id) => {
     toast.success("Advert deleted successfully");
     setAdverts(adverts.filter(advert => advert.id !== id));
-    setIsModalOpen(false); // Close the modal after deletion
+    setIsModalOpen(false);
   };
 
   const handleEdit = (id) => {
@@ -68,28 +47,25 @@ const ViewAds = () => {
     setIsModalOpen(false);
   };
 
-  const updateAdvert = (updatedAdvert) => {
-    setAdverts(adverts.map(advert =>
-      advert.id === updatedAdvert.id ? updatedAdvert : advert
-    ));
-  };
-
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="p-4 bg-white rounded shadow-md">
       <h2 className="text-lg font-semibold mb-4">View Adverts</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"> {/* Maintained gap of 8 */}
         {adverts.map((advert) => (
-          <div key={advert.id} className="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center h-52">
-            <h3 className="text-lg font-semibold">{advert.title}</h3>
-            <p className="text-md text-gray-700">{advert.price}</p>
+          <div key={advert.id} className="relative bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300"> {/* Removed fixed width and height */}
             <img
-                  src={`https://savefiles.org/${advert.image}?shareable_link=461`}
-                  alt={advert.title}
-                  className="w-full h-64 object-cover mb-2 rounded-md"
-                />
-            <div className="mt-4 flex space-x-2">
+              src={`https://savefiles.org/${advert.image}?shareable_link=461`} // Use the correct image URL
+              alt={advert.title}
+              className="w-full h-64 object-cover" // Set height for the image to fit the card
+            />
+            <div className="p-2 flex flex-col justify-start items-center">
+              <h3 className="text-lg font-semibold text-center">{advert.title}</h3>
+              <p className="text-md text-gray-700 text-center">{advert.description}</p>
+              <p className="text-xl text-[#e41e1b] font-bold text-center">{advert.price}</p>
+            </div>
+            <div className="absolute bottom-4 left-4 right-4 flex justify-between">
               <button onClick={() => handleEdit(advert.id)} className="text-blue-500 hover:text-blue-700">
                 <AiFillEdit size={24} />
               </button>

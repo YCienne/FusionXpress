@@ -86,3 +86,8 @@ export const apiGetVendorStats = async (vendorId) => {
 export const apiGetVendorAdverts = async () => {
   return apiClient.get("/vendors/me/adverts?limit=0");
 };
+
+// Get Vendor Adverts Counts
+export const apiGetVendorAdvertsCount = async () => {
+  return apiClient.get("/vendors/me/adverts?limit=0");
+};

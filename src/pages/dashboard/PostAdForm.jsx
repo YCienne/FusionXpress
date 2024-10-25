@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { apiPostAdvert } from '../../services/vendor'; // Assuming this is where the API call is located
 
 const PostAdForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     price: '',
     category: '',
-    image: null,  // Add image to the state
+    image: null,
   });
 
-  const [loading, setLoading] = useState(false); // To manage loading state
-  const [error, setError] = useState(null); // To handle any errors
-  const [success, setSuccess] = useState(false); // To handle success status
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-  // Handle input changes for text fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -23,34 +24,32 @@ const PostAdForm = () => {
     });
   };
 
-  // Handle image input
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Select the first file from the input
+    const file = e.target.files[0];
     setFormData({
       ...formData,
       image: file,
     });
   };
 
-  // Handle form submission and POST data
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setSuccess(false);
 
-    const adData = new FormData(); // Create FormData object
+    const adData = new FormData();
     adData.append('title', formData.title);
     adData.append('description', formData.description);
     adData.append('price', formData.price);
     adData.append('category', formData.category);
-    adData.append('image', formData.image); // Append image file
+    adData.append('image', formData.image);
 
     try {
-      // Call the API with the FormData object
       const response = await apiPostAdvert(adData); 
       console.log('Advert posted:', response);
-      setSuccess(true); // Set success to true if the request was successful
+      setSuccess(true);
+      navigate('/dashboard/view-ads'); // Redirect to the view ads page upon success
     } catch (error) {
       console.error('Error posting advert:', error);
       setError('Failed to post advert, please try again.');
@@ -63,7 +62,6 @@ const PostAdForm = () => {
     <form className="bg-white p-6 shadow-md rounded-lg" onSubmit={handleSubmit}>
       <h2 className="text-lg font-semibold mb-4 text-green-900">Add New Ad</h2>
 
-      {/* Title Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Title</label>
         <input
@@ -76,7 +74,6 @@ const PostAdForm = () => {
         />
       </div>
 
-      {/* Description Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Description</label>
         <textarea
@@ -88,7 +85,6 @@ const PostAdForm = () => {
         />
       </div>
 
-      {/* Price Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Price</label>
         <input
@@ -101,7 +97,6 @@ const PostAdForm = () => {
         />
       </div>
 
-      {/* Category Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Category</label>
         <input
@@ -114,33 +109,26 @@ const PostAdForm = () => {
         />
       </div>
 
-      {/* Image Upload Input */}
       <div className="mb-4">
         <label className="block text-gray-700">Product Image</label>
         <input
           type="file"
           name="image"
           accept="image/*"
-          onChange={handleImageChange} // Use this handler to capture the file
+          onChange={handleImageChange}
           className="w-full px-3 py-2 border rounded-lg"
           required
         />
       </div>
 
-      {/* Display error message */}
       {error && <p className="text-red-500 mb-4">{error}</p>}
-
-      {/* Display success message */}
       {success && <p className="text-green-500 mb-4">Advert posted successfully!</p>}
-
-      {/* Loading indicator */}
       {loading && <p className="text-blue-500 mb-4">Posting advert...</p>}
 
-      {/* Submit Button */}
       <button
         type="submit"
         className="bg-gradient-to-r from-teal-400 to-blue-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-        disabled={loading} // Disable button while posting
+        disabled={loading}
       >
         {loading ? 'Posting...' : 'Post Ad'}
       </button>

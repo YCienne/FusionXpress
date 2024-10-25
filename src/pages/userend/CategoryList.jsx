@@ -19,8 +19,8 @@ const CategoryList = () => {
     // Fetch adverts by category
     const fetchAdverts = async () => {
       try {
-        const data = await apiGetAdvertsByCategory(category); // Assuming the data is the array of adverts
-        setAdverts(data); // Set the adverts to state
+        const response = await apiGetAdvertsByCategory(category); // Assuming the data is the array of adverts
+        setAdverts(response.data.data); // Set the adverts to state
       } catch (err) {
         console.error('Error fetching advert category:', err);
         setError('Error fetching adverts for the selected category.');
@@ -51,7 +51,7 @@ const CategoryList = () => {
           adverts.map((advert) => (
             <div key={advert.id} className="p-4 border rounded shadow">
               <img
-                src={advert.image}
+                src={`https://savefiles.org/${advert.image}?shareable_link=461`}
                 alt={advert.title}
                 className="w-full h-48 object-cover"
               />
